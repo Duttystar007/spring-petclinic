@@ -1,0 +1,19 @@
+node
+{
+  stage('cloning from repo')
+   {
+     git 'https://github.com/spring-projects/spring-petclinic.git'
+   }
+  stage('build package')
+  {
+    sh label: '', script: 'mvn package'
+  }
+ stage('archive the artifacts') 
+  {
+     archiveArtifacts 'target/*.jar'
+}
+ stage('junit test results')
+ {
+   junit 'target/surefire-reports/*.xml'
+ }
+}  
